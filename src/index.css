@@ -121,9 +121,9 @@
   50% { transform: translateY(-10px); }
 }
 
-/* ── Scroll-video mode: transparent sections over the canvas background ── */
+/* ── Scroll-video mode: sections get a dark tint so video shows through ── */
 .video-mode section {
-  background-color: transparent !important;
+  background-color: rgba(0, 0, 0, 0.55) !important;
   background-image: none !important;
 }
 

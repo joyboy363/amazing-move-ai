@@ -13,15 +13,8 @@ import { ScrollVideoBackground } from "@/components/ScrollVideoBackground";
 const Index = () => {
   return (
     <>
-      {/* Fixed background layers — sit in root stacking context */}
       <ScrollVideoBackground />
-      <div
-        className="fixed inset-0 pointer-events-none"
-        style={{ zIndex: 2, background: "rgba(0,0,0,0.50)" }}
-      />
-
-      {/* Page content — explicitly above the overlay */}
-      <div className="video-mode min-h-screen" style={{ position: "relative", zIndex: 10 }}>
+      <div className="video-mode min-h-screen" style={{ position: "relative", zIndex: 1 }}>
         <Navbar />
         <Hero />
         <Services />
