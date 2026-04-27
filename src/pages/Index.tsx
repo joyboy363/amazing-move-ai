@@ -12,14 +12,16 @@ import { ScrollVideoBackground } from "@/components/ScrollVideoBackground";
 
 const Index = () => {
   return (
-    <div className="relative min-h-screen video-mode">
-      {/* Fixed video background */}
+    <>
+      {/* Fixed background layers — sit in root stacking context */}
       <ScrollVideoBackground />
-      {/* Dark overlay for readability */}
-      <div className="fixed inset-0 bg-black/50 pointer-events-none" style={{ zIndex: 1 }} />
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{ zIndex: 2, background: "rgba(0,0,0,0.50)" }}
+      />
 
-      {/* Scrollable content */}
-      <div className="relative" style={{ zIndex: 2 }}>
+      {/* Page content — explicitly above the overlay */}
+      <div className="video-mode min-h-screen" style={{ position: "relative", zIndex: 10 }}>
         <Navbar />
         <Hero />
         <Services />
@@ -31,7 +33,7 @@ const Index = () => {
         <StickyContact />
         <AIChatbot />
       </div>
-    </div>
+    </>
   );
 };
 
