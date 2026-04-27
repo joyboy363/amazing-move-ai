@@ -120,3 +120,53 @@
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
 }
+
+/* ── Scroll-video mode: transparent sections over the canvas background ── */
+.video-mode section {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.video-mode footer {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(12px);
+}
+
+/* Cards and panels get a frosted-glass look */
+.video-mode .glass-card,
+.video-mode [class*="bg-card"],
+.video-mode [class*="bg-background"] {
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  backdrop-filter: blur(14px);
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.video-mode [class*="bg-muted"] {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Force all text to be light so it reads over the dark video overlay */
+.video-mode section *:not(button):not(input):not(textarea):not(select):not([class*="gradient-primary"]) {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.video-mode section [class*="text-muted-foreground"] {
+  color: rgba(255, 255, 255, 0.60) !important;
+}
+
+/* Keep primary buttons looking correct */
+.video-mode button[class*="bg-primary"],
+.video-mode a[class*="bg-primary"] {
+  color: #fff !important;
+}
+
+/* Section content fade-in on scroll (Intersection Observer driven) */
+.section-fade {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.section-fade.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

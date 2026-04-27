@@ -89,24 +89,43 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Build the start time — default to 9:00 AM UTC
-    // Use the slot time from Cal.com availability, fallback to 9 AM
-    const startTime = slotTime || `${date}T09:00:00Z`;
+    // Look up the numeric eventTypeId from the slug — required by Cal.com v2 booking API
+    const eventTypesRes = await fetch(
+      "https://api.cal.com/v2/event-types?username=santiago-salas-xrvcym&eventSlug=moving-service-bookings",
+      {
+        headers: {
+          Authorization: `Bearer ${calApiKey}`,
+          "cal-api-version": "2024-09-04",
+        },
+      }
+    );
+    const eventTypesData = await eventTypesRes.json();
+    console.log("Cal.com event types response:", JSON.stringify(eventTypesData));
 
-    // Build a description with all the move details
-    const description = [
-      `📍 Pickup: ${from}`,
-      `📍 Destination: ${to}`,
-      `🏠 Home Size: ${size || "Not specified"}`,
-      `📦 Services: ${services && services.length > 0 ? services.join(", ") : "None"}`,
-      `📞 Phone: ${phone || "Not provided"}`,
-      `📧 Email: ${email}`,
-    ].join("\n");
+    const eventTypeId: number | undefined =
+      eventTypesData?.data?.[0]?.id ?? eventTypesData?.data?.eventType?.id;
+
+    if (!eventTypeId) {
+      console.error("Could not resolve Cal.com eventTypeId from slug. Response:", JSON.stringify(eventTypesData));
+      return new Response(
+        JSON.stringify({
+          success: true,
+          booking_id: booking.id,
+          calendar_synced: false,
+          message: "Booking saved but could not resolve Cal.com event type.",
+        }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    console.log("Resolved Cal.com eventTypeId:", eventTypeId);
+
+    // Build the start time — use the slot time from Cal.com availability, fallback to 9 AM
+    const startTime = slotTime || `${date}T09:00:00Z`;
 
     const calPayload = {
       start: startTime,
-      eventTypeSlug: "moving-service-bookings",
-      username: "santiago-salas-xrvcym",
+      eventTypeId,
       attendee: {
         name,
         email,

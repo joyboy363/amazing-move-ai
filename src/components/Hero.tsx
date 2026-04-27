@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Shield, Clock, Star, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroImg from "@/assets/hero-moving.jpg";
 
 const trustBadges = [
   { icon: Shield, label: "Licensed & Insured" },
@@ -13,14 +12,7 @@ const trustBadges = [
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img src={heroImg} alt="Professional movers loading a truck" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-secondary/80 backdrop-blur-[2px]" />
-        <div className="absolute inset-0 gradient-primary opacity-60" />
-      </div>
-
-      {/* Floating shapes */}
+      {/* Floating accent blurs */}
       <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-primary/10 blur-3xl animate-float" />
       <div className="absolute bottom-20 left-10 w-96 h-96 rounded-full bg-accent/10 blur-3xl animate-float-delayed" />
 

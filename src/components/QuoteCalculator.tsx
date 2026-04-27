@@ -39,7 +39,7 @@ const QuoteCalculator = () => {
   const hasInputs = moveType && homeSize;
 
   return (
-    <section id="quote" className="section-padding bg-background">
+    <section id="quote" className="section-padding">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -47,13 +47,15 @@ const QuoteCalculator = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider">Instant Estimate</span>
-          <h2 className="font-heading font-bold text-3xl md:text-5xl text-foreground mt-3 mb-4">
-            Get Your Quote in Seconds
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Adjust the details below and see your estimated price range instantly.
-          </p>
+          <div className="inline-block rounded-xl px-8 py-6 bg-black/40 backdrop-blur-md border border-white/10">
+            <span className="text-primary font-semibold text-sm uppercase tracking-wider">Instant Estimate</span>
+            <h2 className="font-heading font-bold text-3xl md:text-5xl text-foreground mt-3 mb-4">
+              Get Your Quote in Seconds
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+              Adjust the details below and see your estimated price range instantly.
+            </p>
+          </div>
         </motion.div>
 
         <motion.div

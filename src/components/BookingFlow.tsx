@@ -246,11 +246,13 @@ const BookingFlow = () => {
   const monthName = currentMonth.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 
   return (
-    <section id="booking" className="section-padding bg-background">
+    <section id="booking" className="section-padding">
       <div className="container mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider">Book Your Move</span>
-          <h2 className="font-heading font-bold text-3xl md:text-5xl text-foreground mt-3 mb-4">Easy 4-Step Booking</h2>
+          <div className="inline-block rounded-xl px-8 py-6 bg-black/40 backdrop-blur-md border border-white/10">
+            <span className="text-primary font-semibold text-sm uppercase tracking-wider">Book Your Move</span>
+            <h2 className="font-heading font-bold text-3xl md:text-5xl text-foreground mt-3 mb-4">Easy 4-Step Booking</h2>
+          </div>
         </motion.div>
 
         <div className="max-w-2xl mx-auto">
