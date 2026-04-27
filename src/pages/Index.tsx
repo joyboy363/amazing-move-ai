@@ -12,21 +12,19 @@ import { ScrollVideoBackground } from "@/components/ScrollVideoBackground";
 
 const Index = () => {
   return (
-    <>
+    <div className="video-mode min-h-screen">
       <ScrollVideoBackground />
-      <div className="video-mode min-h-screen" style={{ position: "relative", zIndex: 1 }}>
-        <Navbar />
-        <Hero />
-        <Services />
-        <WhyChooseUs />
-        <QuoteCalculator />
-        <Testimonials />
-        <BookingFlow />
-        <Footer />
-        <StickyContact />
-        <AIChatbot />
-      </div>
-    </>
+      <Navbar />
+      <Hero />
+      <Services />
+      <WhyChooseUs />
+      <QuoteCalculator />
+      <Testimonials />
+      <BookingFlow />
+      <Footer />
+      <StickyContact />
+      <AIChatbot />
+    </div>
   );
 };
 
