@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TOTAL_FRAMES = 300;
 const pad = (n: number) => String(n).padStart(3, "0");
@@ -10,6 +10,7 @@ export const ScrollVideoBackground = () => {
   const loadedFlags = useRef<boolean[]>(new Array(TOTAL_FRAMES).fill(false));
   const currentIndex = useRef(0);
   const rafId = useRef<number>();
+  const [firstFrameLoaded, setFirstFrameLoaded] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -22,17 +23,22 @@ export const ScrollVideoBackground = () => {
     resize();
     window.addEventListener("resize", resize);
 
-    // Preload all frames
-    for (let i = 0; i < TOTAL_FRAMES; i++) {
+    // Load frame 1 first, then the rest
+    const loadFrame = (i: number) => {
       const img = new Image();
-      img.onload = () => { loadedFlags.current[i] = true; };
+      img.onload = () => {
+        loadedFlags.current[i] = true;
+        if (i === 0) setFirstFrameLoaded(true);
+      };
       img.src = frameSrc(i + 1);
       images.current[i] = img;
-    }
+    };
+
+    loadFrame(0);
+    for (let i = 1; i < TOTAL_FRAMES; i++) loadFrame(i);
 
     const draw = () => {
       const idx = currentIndex.current;
-      // Find nearest loaded frame (search backward)
       let drawIdx = idx;
       for (let back = 0; back <= idx; back++) {
         if (loadedFlags.current[idx - back]) { drawIdx = idx - back; break; }
@@ -68,10 +74,22 @@ export const ScrollVideoBackground = () => {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 w-full h-full object-cover"
-      style={{ zIndex: 0 }}
-    />
+    <>
+      {/* Fallback gradient shown until first frame loads */}
+      {!firstFrameLoaded && (
+        <div
+          className="fixed inset-0"
+          style={{
+            zIndex: 0,
+            background: "linear-gradient(135deg, #0f1b2d 0%, #1a2a4a 50%, #0d1929 100%)",
+          }}
+        />
+      )}
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 w-full h-full"
+        style={{ zIndex: 0, opacity: firstFrameLoaded ? 1 : 0, transition: "opacity 0.5s ease" }}
+      />
+    </>
   );
 };
